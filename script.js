@@ -146,6 +146,10 @@ $("#searchForm").submit(function(e) {
 
   var searchInput = $("input[type=text]").val();
   console.log(searchInput);
+  
+  if(searchInput == "") {
+    alert("You forgot to enter your query, I guess?");
+  }
 
   $.getJSON("https://en.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&srsearch=" + searchInput + "&utf8=&format=json&callback=?", function(json) {
     console.log(json);
