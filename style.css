@@ -20,6 +20,21 @@ svg {
   z-index: -5;
 }
 
+.i-frame {
+  height: 90vh;
+  padding: 5vh 5vw;
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  overflow: scroll;
+}
+
+iframe {
+  height: 100%;
+  width: 100%;
+  border: none;
+}
+
 .top-sec {
   height: 50vh;
   width: 100vw;
@@ -40,9 +55,6 @@ svg {
   cursor: default;  
   padding: 2px 0;
   letter-spacing: 2.5px;
-  /*float: left;
-  position: absolute;
-  top: 7.5vh;*/
 }
 
 .wiki-text {
@@ -87,6 +99,7 @@ input[type=text] {
   border: 1px solid #FFF;
   cursor: pointer;
   position: absolute;
+  z-index: 15;
   top: 0px;
   right: 0px;
 }
@@ -96,9 +109,7 @@ input[type=text] {
   overflow-y: scroll;
 }
 
-.wiki-selected {
-  color:  linear-gradient(to bottom right, red, yellow);
-}
+.wiki-selected {}
 
 li {
   color: #FFF;

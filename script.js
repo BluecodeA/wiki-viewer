@@ -1,52 +1,40 @@
 //CSS MODIFICATION CODE
 
-var widthH1 = $(".top-sec h1").width();
-//alert(widthH1);
+var windowWidth = $(window).width();
+console.log("Window:" + windowWidth);
 
-$("input[type=text]").css({
-  "width": widthH1
-});
+var widthH1 = $(".top-sec h1").width();
+console.log("H1:" + widthH1);
 
 $(".xs-center").css({
   "width": widthH1
 });
 
-if (window.innerWidth > 720) {
+$("input[type=text]").css({
+  "width": widthH1
+});
+
+var iFrameWidth = ((windowWidth - widthH1) - ((2 * windowWidth) / 100));
+console.log("iFrame:" + iFrameWidth);
+
+if (windowWidth > 720) {
   $(".wiki-list").css({
-    "marginLeft": "-" + widthH1 + "px"
+    "width": widthH1,
+    "marginLeft": "-" + widthH1,
+    "paddingLeft": "20px"
   });
+
+  $(".i-frame").css({
+    "width": iFrameWidth,
+    "right": 0
+  });
+
 } else {
   $(".wiki-list").hide();
 }
 
-if (window.innerWidth > 720) {
-  $(".wiki-list").css({
-    "width": widthH1,
-    "paddingLeft": "20px"
-  });
-} else {}
-
+$(".i-frame").hide();
 $("#closeX").hide();
-
-//RANDOM WIKI GENERATION CODE
-
-$("#wikiButton").click(function() {
-  $.getJSON("https://en.wikipedia.org/w/api.php?action=query&list=random&rnnamespace=0&rnlimit=1&format=json&callback=?", function(json) {
-    console.log(json);
-    var wikiID = json.query.random[0].id;
-    window.open("https://en.wikipedia.org/?curid=" + wikiID, "_blank");
-  });
-});
-
-/*$(".top-sec h1").click(function() {
-  var searchInput = $("input[type=text]").val();
-  console.log(searchInput);
-  $("input[type=text]").val("");
-
-  $.getJSON("https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=" + searchInput + "&utf8=&format=json&callback=?", function(json) {
-    console.log(json);
-  });
-});*/
 
 //SVG GENERATION CODE
 
@@ -98,7 +86,7 @@ function focusInSearch() {
 
     $(".bot-sec-content").animate({
       width: "100vw"
-    }, 600);
+    }, 500);
 
   });
 
@@ -134,7 +122,7 @@ function focusOutSearchEvents() {
   if (window.innerWidth > 720) {
     $(".bot-sec-content").animate({
       width: "50vw"
-    }, 600);
+    }, 500);
     $(".xs-center").animate({
       marginLeft: "auto",
       marginRight: "auto"
@@ -159,29 +147,58 @@ $("#searchForm").submit(function(e) {
   var searchInput = $("input[type=text]").val();
   console.log(searchInput);
 
-  $.getJSON("https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=" + searchInput + "&utf8=&format=json&callback=?", function(json) {
+  $.getJSON("https://en.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&srsearch=" + searchInput + "&utf8=&format=json&callback=?", function(json) {
     console.log(json);
     console.log(json.query.search.length);
-    $(".upper-ul").empty();
     
-    for(i = 0; i < json.query.search.length; i++) {
-      
+    var wikiTitleInitial = json.query.search[0].title;
+    $(".i-frame").empty();
+    $(".i-frame").append('<iframe src="https://en.m.wikipedia.org/wiki/' + wikiTitleInitial + '" id="iFrame">iFrame</iframe>');
+    
+    $(".upper-ul").empty();
+
+    for (var i = 0; i < json.query.search.length; i++) {
+
       var iPlus = i + 1;
 
-    $(".upper-ul").append(
-      $("<li>").attr("class", "upper-li-" + iPlus).append(
-        $("<ul>").attr("class", "lower-ul-" + iPlus).append(
-          $("<li>").attr("class", "li-header-" + iPlus))));
-    $(".lower-ul-" + iPlus).append(
-      $("<li>").attr("class", "li-snippet-" + iPlus));
-    
-    $(".li-header-" + iPlus).text(json.query.search[i].title);
-    //json.query.search[0].title
-    $(".li-snippet-" + iPlus).html(json.query.search[i].snippet);
-    //json.query.search[0].snippet
-      
+      $(".upper-ul").append(
+        $("<li>").attr("class", "upper-li-" + iPlus).append(
+          $("<ul>").attr("class", "lower-ul-" + iPlus).append(
+            $("<li>").attr("class", "li-header-" + iPlus))));
+      $(".lower-ul-" + iPlus).append(
+        $("<li>").attr("class", "li-snippet-" + iPlus));
+
+      var wikiTitle = json.query.search[i].title;
+      var wikiSnippet = json.query.search[i].snippet;
+
+      $(".li-header-" + iPlus).text(json.query.search[i].title);
+      //json.query.search[0].title
+      $(".li-snippet-" + iPlus).html(json.query.search[i].snippet);
+      //json.query.search[0].snippet
+
+      $(".upper-li-" + iPlus).click(function() {
+        var upperLi = $(this).attr("class");
+        var upperLiNumber = upperLi.slice(9);
+        var wikiTitleCurrent = json.query.search[upperLiNumber - 1].title;
+        console.log(upperLiNumber);
+        console.log(wikiTitleCurrent);
+        //$("#iFrame").attr("src", "https://en.m.wikipedia.org/wiki/" + json.query.search[i].title);
+        $(".i-frame").empty();
+        $(".i-frame").append('<iframe src="https://en.m.wikipedia.org/wiki/' + wikiTitleCurrent + '" id="iFrame">iFrame</iframe>')
+      });
+
     }
+
   });
+  
+  if (window.innerWidth > 720) {
+      $(".wiki-list").animate({
+        "marginLeft": "0"
+      }, 400);
+      $(".i-frame").show();
+    } else {
+      $(".wiki-list").show(700);
+    }
 
   $(".bot-sec").animate({
     "marginTop": "50vh",
@@ -213,15 +230,7 @@ $("#searchForm").submit(function(e) {
   var endPointsTop = [0, 0, svgWidth, 0, svgWidth, 90, 0, 90];
   polygonTop.animate({
     points: endPointsTop
-  }, 300, mina.linear, function() {
-    if (window.innerWidth > 720) {
-      $(".wiki-list").animate({
-        "marginLeft": "0"
-      }, 400);
-    } else {
-      $(".wiki-list").show(700);
-    }
-  });
+  }, 300, mina.linear);
 
   $("input[type=text]").off("focusin");
   $("input[type=text]").off("focusout");
@@ -230,17 +239,19 @@ $("#searchForm").submit(function(e) {
 // RETURN TO INITIAL PAGE LAYOUT
 
 $("#closeX").click(function() {
-  console.log("X");
 
   $("#closeX").hide();
+  $(".i-frame").hide(function() {
+    $(".i-frame").empty();
+  });
   $("input[type=text]").val("");
 
   if (window.innerWidth > 720) {
     $(".wiki-list").animate({
       "marginLeft": "-" + widthH1 + "px"
-    }, 400).delay(800);
+    }, 400);
   } else {
-    $(".wiki-list").hide(800).delay(800);
+    $(".wiki-list").hide(800);
   }
 
   $(".bot-sec").show(function() {
@@ -273,4 +284,14 @@ $("#closeX").click(function() {
 
   focusOutSearchEvents(); // SINCE THE ABOVE FUNCTIONS ONLY INITIATE WHEN FOCUS IN/OUT HAPPENS, THERE IS A REQUIREMENT TO FOCUS OUT WHEN 'X' IS CLICKED. HENCE THE INSTRUCTIONS INSIDE focusOutSearch() ARE COMPARTMENTALISED AND INITIATED THROUGH THIS FUNCTION
 
+});
+
+//RANDOM WIKI GENERATION CODE
+
+$("#wikiButton").click(function() {
+  $.getJSON("https://en.wikipedia.org/w/api.php?action=query&list=random&rnnamespace=0&rnlimit=1&format=json&callback=?", function(json) {
+    console.log(json);
+    var wikiID = json.query.random[0].id;
+    window.open("https://en.wikipedia.org/?curid=" + wikiID, "_blank");
+  });
 });
