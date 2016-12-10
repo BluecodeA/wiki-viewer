@@ -26,13 +26,14 @@ svg {
   position: absolute;
   z-index: 10;
   top: 0;
+  right: 0;
   overflow: hidden;
 }
 
 iframe {
   height: 100%;
   width: 100%;
-  background-color: rgba(255,255,255,0.75);
+  background-color: rgba(255,255,255,0.5);
   border: none;
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
 }
@@ -43,7 +44,7 @@ iframe {
   overflow: hidden;
 }
 
-.xs-center {
+.top-sec-content {
   position: relative;
   top: 5vh;
 }
@@ -63,12 +64,6 @@ iframe {
   color: #212121;
   background-color: #FFFFFF;
   padding: 8px 0 8px 30px;
-}
-
-.top-sec form {
-  /*position: absolute;
-  top: 22.5vh;
-  left : 0;*/
 }
 
 input[type=text] {
@@ -92,18 +87,33 @@ input[type=text] {
   margin-left: 7.5px;
 }
 
-#closeX {
-  color: #FFF;
-  background-color: #212121;
-  display: inline-block;
-  font-size: 1.75em;
-  padding: 5px 10px;
-  border: 1px solid #FFF;
-  cursor: pointer;
+.menu-tabs {
   position: absolute;
   z-index: 15;
   top: 0px;
   right: 0px;
+}
+
+.menu-tabs li {
+  color: #FFF;
+  background-color: #212121;
+  height: 32.5px;
+  display: inline-block;
+  font-size: 1.5em;
+  margin-top: 2.5px;
+  margin-right: 2.5px;
+  padding: 5px 10px;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+#openTab:hover {
+  color: #212121;
+  background-color: #FFF;
+}
+
+#closeTab:hover {
+  background-color: #FF0000;
 }
 
 .wiki-list {
@@ -111,7 +121,12 @@ input[type=text] {
   overflow-y: scroll;
 }
 
-.wiki-selected {}
+.loading-spinner {
+  color: #FFF;
+  font-size: 3em;
+  display: block;
+  margin: 0 auto;
+}
 
 li {
   color: #FFF;
@@ -120,6 +135,17 @@ li {
 
 ul {
   padding-left: 0; /* TO CANCEL OUT AN ERROR WHICH GIVES UL ELEMENTS AN AUTOMATIC LEFT PADDING OF 40 */
+}
+
+.selected-ul {
+  background-color: rgba(133,133,133,0.35);
+  /*background-color: linear-gradient(to bottom right, #5416B4, #7027C3, #B94CE1);*/
+  padding: 5px 7.5px;
+  box-shadow: 0 0 4px 1px rgba(33,33,33, 0.5);
+}
+
+.selected-ul li {
+  color: #FFF;
 }
 
 [class^="upper-li"] {
@@ -164,6 +190,12 @@ ul {
   width: 20vw;
   margin: 0 auto;
   padding: 5px 15px;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
+}
+
+#wikiButton:hover {
+  color: #FFF;
+  background-color: #6611A0;
 }
 
 @media only screen and (max-width: 720px) {
@@ -173,10 +205,8 @@ ul {
   .top-sec {
     background-color: rgba(33,33,33,0.85)
   }
-  .xs-center {
+  .top-sec-content {
     margin: 0 auto;
-    /*position: absolute;
-    left: 25vw;*/
   }
   .wiki-text {
     padding: 8px 0 8px 10px;
@@ -204,15 +234,6 @@ ul {
 @media only screen and (max-width: 540px) {
   .top-sec h1 {
     font-size: 4em;
-  }
-  .xs-center {
-    /*left: 30vw;*/
-  }
-  input[type=text] {
-    /*margin-top: 5px;*/
-  }
-  .fa-search {
-    /*top: 15px;*/
   }
   .bot-sec-content {
     padding: 0 10vw;

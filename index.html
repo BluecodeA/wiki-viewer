@@ -1,9 +1,10 @@
+<!--TOP SECTION-->
+
 <div class="top-sec">
   <svg preserveAspectRatio="none" viewBox="0 0 160 90" id="topSVG">
-    <!--<polygon points="0,0 110,0 70,90 0,90" style="fill:#212121;opacity:0.85"/>
-    <polygon points="102,5 66.5,85 63,85 98.5,5" style="fill:#FFFFFF"/>-->
+    
   </svg>
-  <div class="xs-center">
+  <div class="top-sec-content">
     <h1><span class="wiki-text">Wiki</span>Viewer</h1>
     <form id="searchForm">
       <div class="form-group">
@@ -15,66 +16,36 @@
       </div>
     </form>
   </div>
-  <div>
-    <p id="closeX" class="text-center">&#10005</p>
+  <div class="menu-tabs">
+    <ul>
+      <li id="openTab">Open in New Tab</li>
+      <li id="closeTab">&#10005</p>
+    </ul>
   </div>
   <div class="wiki-list">
+    <div class="loading-spinner">
+    <p class="text-center"><span class="fa fa fa-spinner fa-spin"></span></p>
+    </div>
     <ul class="upper-ul">
-      <!--<li class="upper-li">
-        <ul>
-          <li class="li-header  wiki-selected">ALBERT EINSTEIN</li>
-          <li class="li-snippet">A small snippet about what this article is all about.</li>
-        </ul>
-      </li>
-      <li class="upper-li">
-        <ul>
-          <li class="li-header">CHARLIE CHAPLIN</li>
-          <li class="li-snippet">A small snippet about what this article is about.</li>
-        </ul>
-      </li>
-      <li class="upper-li">
-        <ul>
-          <li class="li-header">MAHATMA GANDHI</li>
-          <li class="li-snippet">A small snippet about what this article is about.</li>
-        </ul>
-      </li>
-      <li class="upper-li">
-        <ul>
-          <li class="li-header">JAWAHARLAL NEHRU</li>
-          <li class="li-snippet">A small snippet about what this article is about.</li>
-        </ul>
-      </li>
-      <li class="upper-li">
-        <ul>
-          <li class="li-header">WINSTON CHURCHILL</li>
-          <li class="li-snippet">A small snippet about what this article is about.</li>
-        </ul>
-      </li>
-      <li class="upper-li">
-        <ul>
-          <li class="li-header">MAO</li>
-          <li class="li-snippet">A small snippet about what this article is about.</li>
-        </ul>
-      </li>
-      <li class="upper-li">
-        <ul>
-          <li class="li-header">ADOLF HITLER</li>
-          <li class="li-snippet">A small snippet about what this article is about.</li>
-        </ul>
-      </li>-->
+      
     </ul>
   </div>
 </div>
+
+<!--BOTTOM SECTION-->
+
 <div class="bot-sec">
   <svg preserveAspectRatio="none" viewBox="0 0 160 90" id="botSVG">
-    <!--<polygon points="70,0 160,0 160,90 30,90" style="fill:#FFFFFF;opacity:0.85"/>
-    <polygon points="77,5 41.5,85 37,85 72.5,5" style="fill:#212121"/>-->
+  
   </svg>
   <div class="bot-sec-content pull-right">
     <p class="text-center">Take a chance. Learn something new. To read a random Wikipedia article,</p>
     <a class="text-center" id="wikiButton">Click Here</a>
   </div>
 </div>
+
+<!--IFRAME SECTION-->
+
 <div class="i-frame">
-  <iframe src="https://wikipedia.org" id="iFrame">iFrame</iframe>
+  <iframe src="" id="iFrame">iFrame</iframe>
 </div>
