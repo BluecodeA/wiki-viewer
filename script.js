@@ -1,4 +1,3 @@
-
 //CSS MODIFICATION CODE
 
 var windowWidth = $(window).width();
@@ -87,9 +86,14 @@ function focusInSearch() {
       }, 300, mina.linear);
     });
 
-    $(".bot-sec-content").animate({
-      width: "100vw"
-    }, 500);
+    if (window.innerWidth > 720) {
+      $(".top-sec-content").animate({
+        "left": ((windowWidth - widthH1) / 2)
+      }, 600);
+      $(".bot-sec-content").animate({
+        width: "100vw"
+      }, 500);
+    } else {}
 
   });
 
@@ -126,10 +130,9 @@ function focusOutSearchEvents() {
     $(".bot-sec-content").animate({
       width: "50vw"
     }, 500);
-    $("top-sec-content").animate({
-      marginLeft: "auto",
-      marginRight: "auto"
-    });
+    $(".top-sec-content").animate({
+      "left": "0"
+    }, 600);
   }
 
 }
@@ -153,14 +156,40 @@ $("#searchForm").submit(function(e) {
   if (searchInput == "") {
     alert('"If you wish to find, you must first seek...." Enter your query in the search bar before hitting enter.');
   }
-  
+
+  function topSectionAnimate() {
+    $(".top-sec-content").animate({
+      "top": "0"
+    });
+    $(".wiki-text").animate({
+      "paddingTop": "0",
+      "paddingBottom": "0"
+    });
+    $("input[type=text]").animate({
+      "marginTop": "0"
+    });
+    $(".fa-search").animate({
+      "marginTop": "10px"
+    });
+  };
+
+  if (window.innerWidth > 720) {
+    $(".top-sec-content").animate({
+      "left": "0"
+    }, 600, function() {
+      topSectionAnimate();
+    });
+  } else {
+    topSectionAnimate();
+  }
+
   $(".wiki-list").show();
   $(".loading-spinner").show();
 
   $.getJSON("https://en.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&srsearch=" + searchInput + "&utf8=&format=json&callback=?", function(json) {
-    
+
     $(".loading-spinner").hide();
-    
+
     console.log(json);
     console.log(json.query.search.length);
 
@@ -188,7 +217,7 @@ $("#searchForm").submit(function(e) {
       //json.query.search[0].title
       $(".li-snippet-" + iPlus).html(json.query.search[i].snippet);
       //json.query.search[0].snippet
-      if(window.innerWidth > 720) {
+      if (window.innerWidth > 720) {
         $(".lower-ul-1").addClass("selected-ul");
       } else {}
 
@@ -202,7 +231,7 @@ $("#searchForm").submit(function(e) {
         console.log(wikiTitleCurrent);
         //$("#iFrame").attr("src", "https://en.m.wikipedia.org/wiki/" + json.query.search[i].title);
         $(".i-frame").empty();
-        if(window.innerWidth > 720) {
+        if (window.innerWidth > 720) {
           $(".i-frame").append('<iframe src="https://en.m.wikipedia.org/wiki/' + wikiTitleCurrent + '" id="iFrame">iFrame</iframe>');
         } else {
           window.open("https://en.wikipedia.org/wiki/" + wikiTitleCurrent, "_blank");
@@ -212,7 +241,7 @@ $("#searchForm").submit(function(e) {
     }
 
   });
-  
+
   $(".menu-tabs").show();
 
   if (window.innerWidth > 720) {
@@ -236,19 +265,6 @@ $("#searchForm").submit(function(e) {
   $("svg").animate({
     "height": "100vh"
   });
-  $(".top-sec-content").animate({
-    "top": "0"
-  });
-  $(".wiki-text").animate({
-    "paddingTop": "0",
-    "paddingBottom": "0"
-  });
-  $("input[type=text]").animate({
-    "marginTop": "0"
-  });
-  $(".fa-search").animate({
-    "marginTop": "10px"
-  });
 
   var svgWidth = ((($(".top-sec h1").width()) / ($(window).width())) * 160) + 2.5;
   var endPointsTop = [0, 0, svgWidth, 0, svgWidth, 90, 0, 90];
@@ -264,7 +280,8 @@ $("#searchForm").submit(function(e) {
 
 $("#closeTab").click(function() {
 
-  $(".menu-tabs").hide();
+   
+  $(".menu-tabs").hide();
   $(".wiki-list").hide();
   $(".upper-ul").empty();
   $(".i-frame").hide(1);
@@ -316,7 +333,7 @@ $("#closeTab").click(function() {
 $("#openTab").click(function() {
   var wikiLink = $("iframe").attr("src");
   //console.log(wikiLink);
-  
+
   window.open(wikiLink, "_blank");
 });
 
